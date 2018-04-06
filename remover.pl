@@ -1,7 +1,14 @@
 %%Looper Remover (Removes lists of pairs)%%
 
+%removes any assignments in Assigns that contains any pair assignment from IllPairList.
+loopRemoveClose(Assigns,[H],NewAssigns):- removeTooClose(Assigns,H,NewAssigns).
+loopRemoveClose(Assigns,[H|IllPairList],NewAssigns):- loopRemoveClose(Assigns,IllPairList,Mid),
+    removeTooClose(Mid,H,NewAssigns).
 
-
+%removes any assignments in Assigns that contain any machTask in MachTaskList.
+loopRemoveTask(Assigns,[H],NewAssigns):- removeBadAssig(Assigns,H,NewAssigns).
+loopRemoveTask(Assigns,[H|MachTaskList],NewAssigns):- loopRemoveTask(Assigns,MachTaskList,Mid),
+    removeBadAssig(Mid,H,NewAssigns).
 
 
 %%Single Pair Removers%%
