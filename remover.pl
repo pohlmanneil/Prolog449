@@ -9,6 +9,11 @@ loopRemoveClose(Assigns,[H|IllPairList],NewAssigns):- loopRemoveClose(Assigns,Il
 loopRemoveTask(Assigns,[H],NewAssigns):- removeBadAssig(Assigns,H,NewAssigns).
 loopRemoveTask(Assigns,[H|MachTaskList],NewAssigns):- loopRemoveTask(Assigns,MachTaskList,Mid),
     removeBadAssig(Mid,H,NewAssigns).
+	
+%removes any assignments in Assigns that do not contain the required ForceTask in ForceTaskList
+loopRemoveNonForced(Assigns,[H],NewAssigns):- removeNonForced(Assigns,H,NewAssigns).
+loopRemoveNonForced(Assigns,[H|ForceTaskList],NewAssigns):- loopRemoveNonForced(Assigns,ForceTaskList,Mid),
+    removeNonForced(Mid,H,NewAssigns).
 
 
 %%Single Pair Removers%%
@@ -20,14 +25,21 @@ removeTooClose([H|Assigns],IllPair,NewAssigns):- removeTooClose(Assigns,IllPair,
     append(EmpOrAssig,Mid,NewAssigns).
 
 
-%removes any assignments in Assigns that contains the MachTask IllMachTask
+%removes any assignments in Assigns that contains the IllMachTask
 removeBadAssig([],_,[]).
 removeBadAssig([H|Assigns],IllMachTask,NewAssigns):-removeBadAssig(Assigns,IllMachTask,Mid),
     isAssigned(IllMachTask,H,EmpOrAssig),
 	append(EmpOrAssig,Mid,NewAssigns).
 
 
-
+%removes any assignments in Assigns that does not contain ForceTask (returns only assignments with ForceTask)
+removeNonForced([],_,[]).
+removeNonForced([H|Assigns],ForceTask,NewAssigns):- removeNonForced(Assigns,ForceTask,Mid),
+    isNotAssigned(ForceTask,H,EmpOrAssig),
+    append(EmpOrAssig,Mid,NewAssigns).
+	
+	
+	
 %%Helpers%%
 
 %%empty 3rd arg if IllPair is neighbouring in H. H 3rd arg if not neighbours%%
@@ -45,6 +57,8 @@ neighboursIn(IllPair,Assign):-
 setTheY(X,Y):-X=:=8, Y is 1.
 setTheY(X,Y):- Y is X+1.
 
+
+
 %%empty 3rd arg if IllMachTask is assigned in H. H 3rd arg if not assigned%%
 isAssigned(IllMachTask,H,[]):-assignedIn(IllMachTask,H).
 isAssigned(IllMachTask,H,[H]).
@@ -55,3 +69,9 @@ assignedIn(IllMachTask,Assign):-
 	nth(2,IllMachTask,Task),
 	nth(Mach,Assign,X),
 	X=Task.
+
+
+
+%empty 3rd arg if ForceTask is not assigned in H. H 3rd arg if assigned
+isNotAssigned(ForceTask,H,[H]):-assignedIn(ForceTask,H).
+isNotAssigned(ForceTask,H,[]).
