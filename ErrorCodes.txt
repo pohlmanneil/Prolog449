@@ -3,5 +3,5 @@ ERROR CODES::
 -2  is  invalid machine/task
 -3  is  invalid task
 -4  is  invalid penalty
--5  is  
+-5  is  machine penalty error
 -6  is  
