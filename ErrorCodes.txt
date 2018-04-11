@@ -1,0 +1,7 @@
+ERROR CODES::
+-1  is  Error while parsing input file
+-2  is  invalid machine/task
+-3  is  invalid task
+-4  is  invalid penalty
+-5  is  
+-6  is  

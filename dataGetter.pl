@@ -1,25 +1,28 @@
+%%Data is either the wanted data, or an error code
+%%RestOfText is either the text, with the data dropped, or the error message corresponding to Data.
+
 getData([H|Text],Data,RestOfText):- H == "forced partial assignment:",
     nth(Next,Text,"forbidden machine:"),
     Len is Next-1,
     split(Len,Text,RawDat,RestOfText),
-    twoBrackToInts(RawDat,Data,Err).
+    twoMachTaskToInts(RawDat,Data,Err).
 
 getData([H|Text],Data,RestOfText):- H == "forbidden machine:",
     nth(Next,Text,"too-near tasks:"),
     Len is Next-1,
     split(Len,Text,RawDat,RestOfText),
-    twoBrackToInts(RawDat,Data,Err).
+    twoMachTaskToInts(RawDat,Data,Err).
 
 getData([H|Text],Data,RestOfText):- H == "too-near tasks:",
     nth(Next,Text,"machine penalties:"),
     Len is Next-1,
     split(Len,Text,RawDat,RestOfText),
-    twoBrackToInts(RawDat,Data,Err).
+    twoTaskTaskToInts(RawDat,Data,Err).
 
 getData([H|Text],Data,RestOfText):- H == "machine penalties:",
     nth(Next,Text,"too-near penalities"),
     Len is Next-1,
-    split(Len,Text,RawDat,RestOfText).
+    split(Len,Text,RawDat,RestOfText). %TODO: Add parser for int grid
 
 getData([H|Text],Data,RestOfText):- H == "too-near penalities",
     thrBrackToInts(Text,MaybeData,ErrFlag),
