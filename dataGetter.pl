@@ -26,13 +26,6 @@ getData([H|Text],Data,RestOfText,Err):- H == "machine penalties:",
 
 getData([H|Text],Data,RestOfText,Err):- H == "too-near penalities",
     thrBrackToInts(Text,Data,Err), RestOfText = 'Empty'.
-	
-    %(ErrFlag == -1 *-> (Data = -1, RestOfText = 'GARBAGE', Foo is 1); Foo is 0),
-    %(ErrFlag == -2 *-> (RestOfText = 'invalid penalty', Data = -1, Bar is 1); Bar is 0),
-    %Tik is (Foo + Bar),
-	%(Tik == 0 *-> (Data = MaybeData, RestofText = []); Wee is 0).
-
-%getData([H|Text],Data,RestOfText):- H == 
 
 getData(Text,[],'Error while parsing input file',-1).
 	
