@@ -29,3 +29,5 @@ matchPenTrip([H|TextIn],TextOut,CounterRow,CounterCol) :- append([CounterRow,Cou
     matchPenTrip(TextIn,Out,NewRow,NewCol),
     append([Mid],Out,TextOut).
 
+lineRemover([],[]).
+lineRemover([H|T],Y):- lineRemover(T,Rest), append(H,Rest,Y).
