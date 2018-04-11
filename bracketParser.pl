@@ -34,12 +34,3 @@ toLongNum([X|Xs],Y):- toLongNum(Xs,Mid),
     length(Xs,Pow),
     penToDig(X,Dig),
     Y is (Dig*(10**Pow))+Mid.
-
-
-%twoBrackToInts([],[],_).
-%twoBrackToInts([H|Raw],Out,ErrFlag):- subtract(H,"(,) ",[Fst,Snd|Emp]),
-%    (Emp \= [] *-> (ErrFlag is -1); Foo is 0),
-%    toDig(Fst,FstNum),
-%	toDig(Snd,SndNum),
-%	twoBrackToInts(Raw,Mid,ErrFlag),
-%	append([[FstNum,SndNum]],Mid,Out).
