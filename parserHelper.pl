@@ -3,14 +3,19 @@ splitTheText([],[]).
 splitTheText(Text,Out):- append(A1,[13,10|A2],Text), %splitting at end-of-line
     splitTheText(A2,Mid),
     append([A1],Mid,Some),
-    subtract(Some, [[]], Out).
+    subtract(Some, [[],[32]], Out).
 splitTheText(Text,Out):- append(A1,[10|A2],Text), %splitting at end-of-line
     splitTheText(A2,Mid),
     append([A1],Mid,Some),
-    subtract(Some, [[]], Out).
+    subtract(Some, [[],[32]], Out).
 splitTheText(Text,[Text]).
 
-
+splitOnSpace([],[]).
+splitOnSpace(Text,Out):- append(A1,[32|A2],Text), %splitting at space
+    splitOnSpace(A2,Mid),
+    append([A1],Mid,Some),
+    subtract(Some, [[],[32]], Out).
+splitOnSpace(Text,[Text]).
 
 checkCharAndReadRest(end_of_file,[],_):-!.
 checkCharAndReadRest(-1,[],_):-!.
