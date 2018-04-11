@@ -23,3 +23,9 @@ checkCharAndReadRest(Char,[Char|Chars],Instream):-
     get_code(Instream,NextChar),
 	checkCharAndReadRest(NextChar,Chars,Instream).
 
+matchPenTrip([],[],_,_).
+matchPenTrip([H|TextIn],TextOut,CounterRow,CounterCol) :- append([CounterRow,CounterCol],[H],Mid),
+    (CounterCol == 8 *-> (NewRow is CounterRow + 1,NewCol is 1); (NewCol is CounterCol + 1, NewRow is CounterRow)),
+    matchPenTrip(TextIn,Out,NewRow,NewCol),
+    append([Mid],Out,TextOut).
+
