@@ -34,3 +34,8 @@ toLongNum([X|Xs],Y):- toLongNum(Xs,Mid),
     length(Xs,Pow),
     penToDig(X,Dig),
     Y is (Dig*(10**Pow))+Mid.
+
+loopLongNum([],[]).
+loopLongNum([X|Xs],Y):- loopLongNum(Xs,Mid),
+    toLongNum(X,Num),
+    append([Num],Mid,Y).

@@ -22,7 +22,14 @@ getData([H|Text],Data,RestOfText,Err):- H == "too-near tasks:",
 getData([H|Text],Data,RestOfText,Err):- H == "machine penalties:",
     nth(Next,Text,"too-near penalities"),
     Len is Next-1,
-    split(Len,Text,RawDat,RestOfText). %TODO: Add parser for int grid
+    split(Len,Text,RawDat,RestOfText),
+    lineRemover(RawDat,SingleDat),
+	splitOnSpace(SingleDat,LofLNum),
+	(loopLongNum(LofLNum,IntPensList) *-> (length(IntPensList,64) *-> matchPenTrip(IntPensList,Data,1,1);
+	(Err is -5,write(IntPensList))) ; Err is -4).
+	
+	%TODO: Fix lineRemover so that it does not concatenate last element of line with first elemenet of following line!!!!!
+	%might also be in splitOnSpace. but probably not..
 
 getData([H|Text],Data,RestOfText,Err):- H == "too-near penalities",
     thrBrackToInts(Text,Data,Err), RestOfText = 'Empty'.
